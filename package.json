@@ -1,24 +1,24 @@
 {
-  "dependencies": {
-    "find-in-files": "^0.5.0",
-    "request": "^2.88.2"
-  },
-  "name": "yandexmmusappapi",
-  "description": "API для получения данных о ныняшнем треке в приложении Яндекс Музыка на Windows",
-  "version": "1.0.0",
-  "main": "yamapi.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MIMBOL228/YandexMusicAppAPI.git"
-  },
-  "author": "MIMBOL <mim.bol@mail.ru>",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/MIMBOL228/YandexMusicAppAPI/issues"
-  },
-  "homepage": "https://github.com/MIMBOL228/YandexMusicAppAPI#readme"
+    "dependencies": {
+        "find-in-files": "^0.5.0",
+        "request": "^2.88.2"
+    },
+    "name": "yandexmusappapi",
+    "description": "API для получения данных о ныняшнем треке в приложении Яндекс Музыка на Windows",
+    "version": "1.0.0",
+    "main": "yamapi.js",
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MIMBOL228/YandexMusicAppAPI.git"
+    },
+    "author": "MIMBOL <mim.bol@mail.ru>",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/MIMBOL228/YandexMusicAppAPI/issues"
+    },
+    "homepage": "https://github.com/MIMBOL228/YandexMusicAppAPI#readme"
 }

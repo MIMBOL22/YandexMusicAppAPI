@@ -5,7 +5,7 @@
     },
     "name": "yandexmusappapi",
     "description": "API для получения данных о ныняшнем треке в приложении Яндекс Музыка на Windows",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "main": "yamapi.js",
     "devDependencies": {},
     "scripts": {

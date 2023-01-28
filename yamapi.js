@@ -1,10 +1,13 @@
 var findInFiles = require('find-in-files');
 var request = require('request');
+var os = require('os');
 
-function getSong() {
-    var datetime = new Date();
-    var promise = new Promise(function(resolve, reject) {
-        findInFiles.find("PlayTrackInternalAsync", "C:/Users/" + require("os").userInfo().username + "/AppData/Local/Packages/A025C540.Yandex.Music_vfvw9svesycw6/LocalCache/Logs", "log" + datetime.toISOString().slice(0, 10).replaceAll("-", "") + ".txt").then(function(results) {
+var yandexPath = "C:/Users/" + os.userInfo().username + "/AppData/Local/Packages/A025C540.Yandex.Music_vfvw9svesycw6/LocalCache/Logs",
+    apiLink = "https://api.music.yandex.net/tracks/";
+
+exports.getSong = () => {
+    var promise = new Promise(resolve => {
+        findInFiles.find("PlayTrackInternalAsync", yandexPath, /log.*\.txt/).then(results => {
             var b = results[Object.keys(results)[0]];
             var regex = /(\d+)\: (.*) ~ (.*)/gm;
             var c = JSON.parse(b.line[b.count - 1]).Track;
@@ -14,12 +17,11 @@ function getSong() {
                 author: ret[2],
                 name: ret[3]
             };
-            request('https://api.music.yandex.net/tracks/' + song.id, function(error, response, body) {
+            request(apiLink + song.id, (error, response, body) => {
                 song.img = "https://" + JSON.parse(body).result[0].coverUri.replaceAll("%%", "200x200")
                 resolve(song);
             });
         })
     })
     return promise;
-}
-exports.getSong = getSong;
+};

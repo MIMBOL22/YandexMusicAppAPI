@@ -1,12 +1,12 @@
 {
+    "name": "yandexmusappapi",
+    "version": "2.0.0",
+    "description": "API для получения данных о текущем треке в приложении Яндекс Музыка на Windows",
+    "main": "yamapi.js",
     "dependencies": {
         "find-in-files": "^0.5.0",
-        "request": "^2.88.2"
+        "node-fetch": "^3.3.0"
     },
-    "name": "yandexmusappapi",
-    "description": "API для получения данных о ныняшнем треке в приложении Яндекс Музыка на Windows",
-    "version": "1.1.0",
-    "main": "yamapi.js",
     "devDependencies": {},
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,12 @@
         "type": "git",
         "url": "git+https://github.com/MIMBOL228/YandexMusicAppAPI.git"
     },
+    "keywords": [
+        "yandex",
+        "music",
+        "yamusic",
+        "track"
+    ],
     "author": "MIMBOL <mim.bol@mail.ru>",
     "license": "GPL-3.0-or-later",
     "bugs": {

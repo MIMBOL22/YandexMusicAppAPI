@@ -19,7 +19,7 @@ npm install yandexmusappapi
 
 Добавьте в свой файл импорт библиотеки :
 ```js
-import yamapi from './yamapi.js';
+import yamapi from 'yandexmusappapi';
 ```
 
 В момент, когда вам нужно будет узнать трек, вызваете функцию и обрабатываете через промис :

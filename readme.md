@@ -187,5 +187,6 @@ https://api.music.yandex.net/
 
 По-умолчанию:
 ```
-i.imgur.com/OSfTU6Z.png```
+i.imgur.com/OSfTU6Z.png
+```
 

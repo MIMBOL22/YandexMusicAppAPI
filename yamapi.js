@@ -1,4 +1,5 @@
-import findInFiles from 'find-in-files';
+import fs from 'fs/promises';
+import { resolve } from 'path';
 import osLib from 'os';
 
 
@@ -9,53 +10,67 @@ const IMGSIZE = "300x300";
 const FAILIMG = "i.imgur.com/OSfTU6Z.png"
 
 export default class YaMApi {
-    song;
+    yandexPath;
     apiURI;
     imgSize;
     failImg;
+    song;
     constructor() {
         this.setYandexPath();
         this.setApiURI();
         this.setImgSize();
         this.setFailImg();
-        this.song = {
+        this.setSong({
             simple:{},
             pro:{}
-        }
+        });
     }
 
-    setYandexPath(yandexPath=""){
-        this.yandexPath = (yandexPath?yandexPath:YANDEXPATH).replace("%u", USER);
+    setYandexPath(yandexPath = YANDEXPATH){
+        this.yandexPath = yandexPath.replace("%u", USER);
     }
-    setApiURI(apiURI=""){
-        this.apiURI = (apiURI?apiURI:APIURI);
+    setApiURI(apiURI = APIURI){
+        this.apiURI = apiURI;
     }
-    setImgSize(imgSize=""){
-        this.imgSize = (imgSize?imgSize:IMGSIZE);
+    setImgSize(imgSize = IMGSIZE){
+        this.imgSize = imgSize;
     }
-    setFailImg(failImg=""){
-        this.failImg = (failImg?failImg:FAILIMG);
+    setFailImg(failImg = FAILIMG){
+        this.failImg = failImg;
+    }
+
+    setSong(song){
+        this.song = song;
     }
 
 
     async updateSong() {
-        let rows = await findInFiles.find("PlayTrackInternalAsync", this.yandexPath, /log.*\.txt/)
-        let lastRow = rows[Object.keys(rows)[0]];
-        let metaMusicFromApp = JSON.parse(lastRow.line[lastRow.count - 1]).Track;
-        let metaMusic = /(\d+)\: (.*) ~ (.*)/.exec(metaMusicFromApp);
-        this.song.simple = {
-            id: metaMusic[1],
-            author: metaMusic[2],
-            name: metaMusic[3]
-        };
-        let apiResp = await fetch(this.apiURI + "tracks/" + this.song.simple.id)
+        const lastLog = (await fs.readdir(this.yandexPath)).filter(( name => /log.*\.txt/.test(name) )).at(-1)
+        const logData = await fs.readFile(resolve(this.yandexPath, lastLog))
+        const lastMatchedLine = logData.toString().match(/(.*PlayTrackInternalAsync.*)/gm).at(-1)
+        const metaMusicFromApp = JSON.parse(lastMatchedLine).Track;
+        const metaMusic = /(\d+)\: (.*) ~ (.*)/.exec(metaMusicFromApp);
+
+        let img = "";
+
+        let apiResp = await fetch(this.apiURI + "tracks/" + metaMusic[1])
             .then(response => response.json());
+
         if (apiResp.result[0].coverUri !== undefined){
-            this.song.simple.img = apiResp.result[0].coverUri.replaceAll("%%", this.imgSize);
+            img = apiResp.result[0].coverUri.replaceAll("%%", this.imgSize);
         }else{
-            this.song.simple.img = this.failImg;
+            img = this.failImg;
         }
-        this.song.pro = apiResp.result[0];
+
+        this.setSong({
+            simple:{
+                id: metaMusic[1],
+                author: metaMusic[2],
+                name: metaMusic[3],
+                img: img
+            },
+            pro:apiResp.result[0]
+        })
     }
     getSong(mode=false){ // false - Simple , true - Pro
         return mode ? this.song.pro : this.song.simple;

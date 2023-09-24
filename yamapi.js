@@ -50,8 +50,8 @@ export default class YaMApi {
         };
         let apiResp = await fetch(this.apiURI + "tracks/" + this.song.simple.id)
             .then(response => response.json());
-        if (apiResp.result[0].coverUri !== undefined){
-            this.song.simple.img = apiResp.result[0].coverUri.replaceAll("%%", this.imgSize);
+        if (apiResp.result[0].albums[0].coverUri !== undefined){
+            this.song.simple.img = apiResp.result[0].albums[0].coverUri.replaceAll("%%", this.imgSize);
         }else{
             this.song.simple.img = this.failImg;
         }

@@ -1,7 +1,7 @@
 {
     "name": "yandexmusappapi",
     "type": "module",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "description": "API для получения данных о текущем треке в приложении Яндекс Музыка на Windows",
     "main": "yamapi.js",
     "dependencies": {
